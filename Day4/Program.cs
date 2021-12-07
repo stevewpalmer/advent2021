@@ -40,22 +40,14 @@ foreach (int number in numbers)
         for (int r = 0; r < 5; r++)
         {
             bool winColumn = true;
-            bool added = false;
             for (int c = 0; c < 5; c++)
             {
-                if (board[r, c] < 0x80)
+                if (board[r, c] < 0x80 && board[r, c] != number)
                 {
-                    if (board[r, c] == number)
-                    {
-                        added = true;
-                    }
-                    else
-                    {
-                        winColumn = false;
-                    }
+                    winColumn = false;
                 }
             }
-            if (winColumn && added)
+            if (winColumn)
             {
                 win = true;
             }
@@ -63,7 +55,6 @@ foreach (int number in numbers)
         for (int c = 0; c < 5; c++)
         {
             bool winRow = true;
-            bool added = false;
             for (int r = 0; r < 5; r++)
             {
                 if (board[r, c] < 0x80)
@@ -71,7 +62,6 @@ foreach (int number in numbers)
                     if (board[r, c] == number)
                     {
                         board[r, c] = board[r, c] | 0x80;
-                        added = true;
                     }
                     else
                     {
@@ -80,7 +70,7 @@ foreach (int number in numbers)
                     }
                 }
             }
-            if (winRow && added)
+            if (winRow)
             {
                 win = true;
             }

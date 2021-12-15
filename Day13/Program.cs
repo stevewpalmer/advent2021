@@ -23,8 +23,13 @@ while (index < input.Length && !string.IsNullOrEmpty(input[index]))
     index++;
 }
 
-int countOfVisibleDotsAfterFirstFold = 0;
-int countOfFolds = 0;
+while (string.IsNullOrEmpty(input[index]))
+{
+    index++;
+}
+
+int countOfVisibleDots = -1;
+
 while (index < input.Length)
 {
     string[] inst = input[index].Split('=');
@@ -41,7 +46,6 @@ while (index < input.Length)
             }
         }
         lastRow = foldLine - 1;
-        countOfFolds++;
     }
     if (inst[0] == "fold along x")
     {
@@ -55,25 +59,23 @@ while (index < input.Length)
             }
         }
         lastColumn = foldLine - 1;
-        countOfFolds++;
     }
 
-    int countOfVisibleDots = 0;
-    foreach ((int y, int x) in map)
+    if (countOfVisibleDots < 0)
     {
-        if (y <= lastRow && x <= lastColumn)
+        countOfVisibleDots = 0;
+        foreach ((int y, int x) in map)
         {
-            ++countOfVisibleDots;
+            if (y <= lastRow && x <= lastColumn)
+            {
+                ++countOfVisibleDots;
+            }
         }
-    }
-    if (countOfFolds == 1)
-    {
-        countOfVisibleDotsAfterFirstFold = countOfVisibleDots;
     }
     index++;
 }
 
-Console.WriteLine($"Puzzle 1 answer : {countOfVisibleDotsAfterFirstFold}");
+Console.WriteLine($"Puzzle 1 answer : {countOfVisibleDots}");
 Console.WriteLine("Puzzle 2 answer : below ...");
 
 for (int y = 0; y <= lastRow; y++)
